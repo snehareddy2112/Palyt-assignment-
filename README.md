@@ -1,18 +1,21 @@
-﻿# 🍳 Palyt Kitchen Inventory & Menu Operations System
+﻿# 🍳 Palyt Kitchen Inventory & Menu Operations Platform
 
-A robust, reactive, and beautifully engineered restaurant kitchen inventory management and live menu availability system. Built for the **Palyt Engineering Intern Task**.
+A robust, reactive, and modern restaurant kitchen inventory management and live menu availability system. Built for the **Palyt Engineering Intern Task**.
 
 ---
 
-## 🌟 Project Overview
+## 🌟 Modern UI/UX Redesign & Production Features
 
-Palyt connects kitchen inventory to the front-of-house menu in real-time. In high-volume restaurant kitchens, running out of an ingredient while a dish remains on the menu creates poor guest experiences. 
+The application features a modern restaurant dashboard interface with a warm, professional culinary palette:
 
-This application bridges that gap:
-1. **Tracks kitchen stock** with realistic units (bulk purchase units like `kg` and `L`).
-2. **Calculates menu dish availability** based on minimum safety buffers (par levels).
-3. **Executes atomic order deductions**, converting portion prep units (`g`, `ml`) to bulk stock units and immediately reflecting availability shifts across the diner menu.
-4. **Protects recipe integrity** by blocking accidental deletion of ingredients actively used by menu items.
+- **Primary Accent**: `#FF7A00` (Warm Culinary Orange)
+- **Secondary Accent**: `#6366F1` (Iris / Indigo)
+- **Status Accents**: `#10B981` (Emerald Green for Available/Healthy), `#FF4D6D` (Coral Red for Out of Stock), `#F59E0B` (Amber for Below Par)
+- **Background**: `#F8FAFC` (Clean Modern Slate)
+- **Sidebar & Top Navigation**: Quick navigation across `Dashboard`, `Inventory`, `Menu`, `Orders`, and `Insights`, universal search with instant filtering, notification alerts for low stock items, and user profile badges.
+- **KPI Summary Cards**: Real-time stats on `Total Ingredients (15)`, `Low Stock Items (1)`, `Available Dishes (5/6)`, and `Menu Readiness (83%)`.
+- **Diner Menu with Food Photography**: High-definition culinary images for every menu dish with real-time stock availability badges, ingredient breakdown chips, and instant portion ordering.
+- **Live Inventory Engine**: Responsive table with live stock status indicators, safety par levels, quick `+/-` restock buttons, and dependency guards.
 
 ---
 
@@ -56,6 +59,27 @@ npm run build
 
 ---
 
+## ☁️ Deployment on Vercel
+
+The project includes ready-to-deploy configuration for [Vercel](https://vercel.com/) with single-page app routing in `vercel.json`.
+
+### Option A: 1-Click GitHub Integration (Recommended)
+1. Go to [Vercel Dashboard](https://vercel.com/new).
+2. Import the GitHub repository: `https://github.com/snehareddy2112/Palyt-assignment-`.
+3. Select Framework Preset: `Vite`.
+4. Click **Deploy**. Vercel will automatically build and assign a production URL.
+
+### Option B: Deploy via Vercel CLI
+```bash
+# Log in to Vercel
+npx vercel login
+
+# Deploy production build
+npx vercel --prod
+```
+
+---
+
 ## 🧠 Business Logic & Domain Architecture
 
 The core domain logic is decoupled into pure, deterministic TypeScript modules under `src/domain/`:
@@ -80,10 +104,11 @@ src/
 ├── context/
 │   └── KitchenContext.tsx      # React state provider connecting domain logic
 └── components/
-    ├── Header.tsx              # Brand header & quick actions
+    ├── Sidebar.tsx             # Collapsible modern restaurant navigation
+    ├── Header.tsx              # Universal search & notification bell
     ├── DashboardMetrics.tsx    # Live inventory & menu KPI cards
     ├── InventoryView.tsx       # Stock table, search, filters & quick adjust
-    ├── MenuView.tsx            # Live diner menu with order triggers
+    ├── MenuView.tsx            # Live diner menu with food cards & order triggers
     ├── IngredientModal.tsx     # Add / edit ingredient dialog with validation
     ├── DeleteConfirmModal.tsx  # Recipe dependency guard modal
     ├── EngineeringWriteupModal.tsx # In-app design decisions viewer
@@ -105,7 +130,7 @@ src/
 ### 2. Menu Availability Rule (`src/domain/recipe.ts`)
 - **The Exact Rule**: A dish is **Available** if and only if **every** ingredient it uses satisfies:
   $$\text{current\_quantity} \ge \text{par\_level}$$
-- If **any** single ingredient drops below its par level ($$\text{current\_quantity} < \text{par\_level}$$) or is missing from stock, the dish immediately becomes **Unavailable**.
+- If **any** single ingredient drops below its par level ($\text{current\_quantity} < \text{par\_level}$) or is missing from stock, the dish immediately becomes **Unavailable**.
 - **Reactivity**:
   - Restocking an ingredient brings all affected dishes back to the menu.
   - Raising an ingredient's par level above its current stock immediately takes dishes off the menu without consuming physical stock.
@@ -113,7 +138,7 @@ src/
 ### 3. Atomic Order Flow (`src/domain/order.ts`)
 When a diner orders a dish:
 1. The recipe is resolved and ingredient portion requirements are converted into each stock item's native storage unit.
-2. The engine performs **all validation checks upfront**: dish existence, ingredient presence, and physical sufficiency ($$\text{stock} \ge \text{required}$$).
+2. The engine performs **all validation checks upfront**: dish existence, ingredient presence, and physical sufficiency ($\text{stock} \ge \text{required}$).
 3. **Atomicity Guarantee**: If any ingredient fails, zero deductions occur and an informative error is returned. If valid, deductions are applied in one atomic transaction and menu availability updates immediately.
 
 ### 4. Ingredient Deletion Policy (`src/domain/recipe.ts`)
