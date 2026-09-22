@@ -3,22 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --primary: #FF7A00;
-    --primary-hover: #E66E00;
-    --accent: #FF4D6D;
-    --secondary: #6366F1;
-    --success: #10B981;
-    --warning: #F59E0B;
-    --danger: #EF4444;
-    --background: #F8FAFC;
-    --card-bg: #FFFFFF;
-    --border-color: #E2E8F0;
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
-    background-color: #F8FAFC;
-    color: #0F172A;
+    background-color: #0b111e;
+    color: #f1f5f9;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
@@ -30,22 +21,16 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #0f172a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #334155;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #475569;
 }
 
-/* Custom button pulse animation */
-@keyframes pulse-subtle {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s infinite ease-in-out;
+.focus-section-ring {
+  transition: all 0.4s ease-in-out;
 }
