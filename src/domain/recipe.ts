@@ -1,6 +1,6 @@
 import { StockItem, Recipe, DishAvailability, IngredientAvailability } from './types';
 import { findIngredientByName, normalizeIngredientName } from './inventory';
-import { convertQuantity, toBaseUnit } from './units';
+import { convertQuantity } from './units';
 
 /**
  * Checks which recipes depend on a given ingredient name.
@@ -74,10 +74,8 @@ export function checkDishAvailability(dish: Recipe, stock: StockItem[]): DishAva
 
     // Convert stock qty and par to the recipe's unit to compare physical sufficiency safely
     let stockInRecipeUnits: number;
-    let parInRecipeUnits: number;
     try {
       stockInRecipeUnits = convertQuantity(stockItem.qty, stockItem.unit, req.unit);
-      parInRecipeUnits = convertQuantity(stockItem.par, stockItem.unit, req.unit);
     } catch {
       // Incompatible unit dimensions
       failingIngredients.push(req.name);

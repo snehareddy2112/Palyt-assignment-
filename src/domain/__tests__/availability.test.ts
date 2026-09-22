@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkDishAvailability, getDishesAvailability } from '../recipe';
+import { checkDishAvailability } from '../recipe';
 import { calculateStockStatus } from '../inventory';
 import { StockItem, Recipe } from '../types';
 

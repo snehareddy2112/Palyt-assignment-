@@ -1,4 +1,4 @@
-import { SupportedUnit, UnitDimension } from './types';
+import { UnitDimension } from './types';
 
 /**
  * Normalized unit definitions and conversion factors to base units.

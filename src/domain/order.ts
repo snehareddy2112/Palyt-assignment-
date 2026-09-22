@@ -1,5 +1,5 @@
 import { StockItem, Recipe, OrderResult, OrderDeduction } from './types';
-import { findIngredientByName, normalizeIngredientName } from './inventory';
+import { normalizeIngredientName } from './inventory';
 import { convertQuantity, formatQuantityWithUnit, roundToPrecision } from './units';
 
 /**
